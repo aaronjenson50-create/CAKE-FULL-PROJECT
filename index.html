@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenz Cakes | Delicious Cakes Crafted with Love</title>
+    <meta name="description"
+        content="Experience luxury with Jenz Cakes. Premium, handcrafted cakes for every occasion. Order now via WhatsApp for a taste of elegance.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="light-mode">
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="cake-icon">🎂</div>
+            <div class="loader-text">Frosting your experience...</div>
+            <div class="loader-bar-container">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">Jenz<span class="logo-accent">Cakes</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Cakes</a></li>
+                <li><a href="#customize">Customize</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="cart-icon-wrapper" id="cart-btn">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span id="cart-count">0</span>
+                </div>
+            </div>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-bg-gradient"></div>
+            <div class="hero-content">
+                <div class="hero-text-container">
+                    <h1 class="hero-title">Jenz Cakes</h1>
+                    <p class="hero-subtitle">Delicious Cakes Crafted with Love</p>
+                    <div class="hero-cta">
+                        <a href="#products" class="btn btn-primary">Order Now</a>
+                        <a href="#customize" class="btn btn-outline">Custom Design</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="cake-orbit">
+                        <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=1200"
+                            alt="Premium Chocolate Cake" class="hero-cake-img">
+                        <div class="cake-glow"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>SCROLL</span>
+                <div class="mouse"></div>
+            </div>
+        </section>
+
+        <!-- Featured Collections -->
+        <section id="products" class="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Signature Creations</h2>
+                    <p class="section-desc">Handcrafted with premium ingredients to make your moments magical.</p>
+                </div>
+
+                <div class="category-filter">
+                    <button class="filter-btn active" data-filter="all">All Cakes</button>
+                    <button class="filter-btn" data-filter="chocolate">Chocolate</button>
+                    <button class="filter-btn" data-filter="birthday">Birthday</button>
+                    <button class="filter-btn" data-filter="wedding">Wedding</button>
+                    <button class="filter-btn" data-filter="custom">Custom</button>
+                    <button id="refresh-cakes-btn" class="btn btn-refresh" title="Refresh Cakes List">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+
+                <div class="products-grid" id="products-grid">
+                    <div class="loading-indicator" id="loading-indicator">
+                        <div class="loading-spinner"></div>
+                        <p>Fetching fresh cakes...</p>
+                    </div>
+                    <!-- Products will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Customization Section -->
+        <section id="customize" class="customize">
+            <div class="container grid-2">
+                <div class="customize-visual">
+                    <div class="premium-card preview-card">
+                        <img id="preview-img"
+                            src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&q=80&w=800"
+                            alt="Cake Preview">
+                        <div class="preview-text-overlay">
+                            <p id="cake-text-preview"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="customize-content">
+                    <h2 class="section-title">Tailor Your Celebration</h2>
+                    <p class="section-desc">Design your cake exactly how you imagine it.</p>
+
+                    <form id="custom-form" class="customizer-form">
+                        <div class="form-group">
+                            <label>Select Cake</label>
+                            <select id="cust-cake-select" class="form-select">
+                                <option value="">Loading cakes...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Size — <span id="cust-price-display" style="color: var(--accent-light); font-weight: 700;">₹0</span></label>
+                            <div class="size-options">
+                                <label class="size-opt">
+                                    <input type="radio" name="size" value="0.5kg">
+                                    <span>0.5kg</span>
+                                </label>
+                                <label class="size-opt">
+                                    <input type="radio" name="size" value="1kg" checked>
+                                    <span>1kg</span>
+                                </label>
+                                <label class="size-opt">
+                                    <input type="radio" name="size" value="2kg">
+                                    <span>2kg</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Message on Cake</label>
+                            <input type="text" id="cust-message" placeholder="Happy Birthday..." maxlength="30">
+                        </div>
+                        <button type="button" id="add-custom-btn" class="btn btn-primary full-width">Add to
+                            Cart</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Happy Hearts</h2>
+                </div>
+                <div class="testimonials-slider">
+                    <!-- Slider contents handled by JS/CSS -->
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"The most beautiful and delicious cake I've ever ordered. Jenz really puts love into their work!"</p>
+                        <div class="client">- Sarah Miller</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Ordered a custom wedding cake and it was the highlight of our night. Absolutely stunning and moist!"</p>
+                        <div class="client">- David K.</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Best chocolate Ganache in town! The texture is just perfect. Will definitely be ordering again."</p>
+                        <div class="client">- Amala Paul</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Their attention to detail is unmatched. The custom message was written so beautifully!"</p>
+                        <div class="client">- Rahul Sharma</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-info">
+                <h3 class="logo-text">Jenz<span class="logo-accent">Cakes</span></h3>
+                <p>Crafting sweet memories for your special moments since 2018.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Shop Cakes</a></li>
+                    <li><a href="#customize">Custom Orders</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Visit Us</h4>
+                <p>THRISSUR/MALA/THUMBARASSERY</p>
+                <p>Phone: +91 9400774175</p>
+                <p>Email: hello@jenzcakes.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Jenz Cakes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Selection</h3>
+            <button id="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <!-- Items injected by JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">₹0.00</span>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary full-width">Proceed to Checkout</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delivery Details</h3>
+                <button id="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="order-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="order-name" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="order-phone" required placeholder="91XXXXXXXXXX">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="order-address" required placeholder="House No, Street, Landmark, City"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Delivery Date</label>
+                        <input type="date" id="order-date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Additional Notes</label>
+                    <textarea id="order-notes" placeholder="Eggless, less cream, etc."></textarea>
+                </div>
+                <button type="submit" class="btn btn-whatsapp full-width">
+                    <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/9400774175" class="floating-wa" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
